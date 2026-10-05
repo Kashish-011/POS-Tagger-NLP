@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS TAGGER — NLP Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="noise"></div>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">NLP</span><span>POS TAGGER</span></div>
+  <div class="top-meta"><span class="live-dot"></span><span id="systemState">BOOTING ENGINE</span></div>
+</header>
+
+<main>
+  <section class="hero hero-new">
+    <div class="hero-copy">
+      <div class="eyebrow">NATURAL LANGUAGE PROCESSING / 01</div>
+      <h1>POS<br><em>TAGGER.</em></h1>
+      <p>Give a sentence to the machine. Pick the tagging method, watch the words transform, and explore their grammatical roles in 3D.</p>
+      <div class="hero-pills"><span>4 TAGGING METHODS</span><span>LIVE 3D</span><span>WORD INTELLIGENCE</span></div>
+    </div>
+    <div class="hero-mascot-wrap">
+      <div class="mascot-glow"></div>
+      <div id="mascotCanvas" aria-label="Animated 3D NLP mascot"></div>
+      <div class="mascot-label"><span class="pulse-dot"></span><span id="mascotStatus">READY TO READ</span></div>
+      <div class="mascot-caption">MEET POS-01 <span>your tiny language guide</span></div>
+    </div>
+  </section>
+
+  <section class="tagger-select top-tagger-select">
+    <div class="section-label"><span>02</span> CHOOSE YOUR TAGGER</div>
+    <div class="tagger-intro"><div><h2>Who should <em>read</em> your sentence?</h2><p>Select one NLP tagger. The result map and 3D language scene follow your choice.</p></div><div class="selection-note"><span class="selection-dot"></span><span id="selectionLabel">HMM ACTIVE</span></div></div>
+    <div class="tagger-grid" id="taggerGrid"></div>
+  </section>
+  <section class="workspace">
+    <div class="section-label"><span>03</span> SENTENCE INTERPRETER</div>
+    <div class="input-layout">
+      <div class="input-panel glass-panel">
+        <div class="input-head"><span>INPUT STREAM</span><span id="charCount">0 chars</span></div>
+        <textarea id="sentence" placeholder="Type a sentence for the NLP engine...">The quick fox is chasing a small rabbit.</textarea>
+        <div class="input-actions">
+          <div class="examples"><button data-example="The intelligent student solved the difficult problem.">Example 01</button><button data-example="Artificial intelligence is changing modern technology.">Example 02</button></div>
+          <button class="primary-btn" id="analyzeBtn">ANALYZE SENTENCE <span>↗</span></button>
+        </div>
+      </div>
+      <aside class="selected-engine glass-panel">
+        <div class="card-kicker">ACTIVE TAGGER</div>
+        <div class="engine-icon" id="engineIcon">H</div>
+        <h2 id="activeModelName">HMM</h2>
+        <p id="activeModelDesc">Select a tagging engine below.</p>
+        <div class="engine-stat"><span>MODEL ACCURACY</span><strong id="activeModelScore">—</strong></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="results">
+    <div class="section-label"><span>04</span> TOKEN MAP</div>
+    <div class="result-head"><div><h2 id="resultTitle">HMM reading</h2><p>Every token is paired with the tag predicted by the selected engine.</p></div><div class="result-stats" id="analysisSummary"></div></div>
+    <div class="token-map" id="tokenMap"></div>
+  </section>
+
+  <section class="nlp-3d">
+    <div class="section-label"><span>05</span> 3D LANGUAGE SPACE</div>
+    <div class="viz-head">
+      <div><div class="micro-label">LIVE MODEL / <span id="threeModelLabel">HMM</span></div><h2>Turn grammar into a <em>world.</em></h2><p>Words become luminous nodes. POS categories form vertical layers, sequence becomes a path, and the selected tagger controls the entire scene.</p></div>
+      <div class="viz-controls"><button id="reset3d" class="control-btn">RESET CAMERA</button><button id="autoRotate" class="control-btn active">AUTO ROTATE</button></div>
+    </div>
+    <div class="three-stage glass-panel">
+      <div class="scene-hud hud-top"><span>● LIVE 3D</span><span id="sceneCount">0 TOKENS</span></div>
+      <div class="scene-hud hud-bottom"><span>DRAG TO ORBIT</span><span>SCROLL TO ZOOM</span><span>CLICK A NODE</span></div>
+      <div id="threeCanvas" aria-label="Interactive 3D POS visualization"></div>
+      <div class="node-inspector" id="nodeInspector"><span class="card-kicker">SELECTED TOKEN</span><strong id="selectedWord">—</strong><span id="selectedTag">Click a node</span><small id="selectedPosition">Position —</small></div>
+      <div class="layer-legend"><div><i class="legend-dot noun"></i>NOUN</div><div><i class="legend-dot verb"></i>VERB</div><div><i class="legend-dot adj"></i>ADJ</div><div><i class="legend-dot adv"></i>ADV</div><div><i class="legend-dot other"></i>OTHER</div></div>
+    </div>
+  </section>
+
+  <section class="comparison">
+    <div class="section-label"><span>06</span> MODEL AGREEMENT</div>
+    <div class="comparison-layout">
+      <div class="table-wrap" id="comparisonTable"></div>
+      <aside class="insight-card"><span class="card-kicker">NLP INSIGHT</span><h3 id="insightTitle">Waiting for analysis</h3><p id="insightText">Run the analyzer to see where the four tagging strategies agree or disagree.</p><div class="agreement-meter"><span id="agreementFill"></span></div><div class="meter-row"><span>MODEL AGREEMENT</span><strong id="agreementValue">—</strong></div></aside>
+    </div>
+  </section>
+
+  <section class="methodology">
+    <div class="section-label"><span>07</span> UNDER THE HOOD</div>
+    <div class="method-grid">
+      <article><b>01 / RULES</b><h3>RegexpTagger</h3><p>Hand-written regular expressions assign grammatical labels without training.</p></article>
+      <article><b>02 / FREQUENCY</b><h3>UnigramTagger</h3><p>Uses the most frequent observed tag for each word in the training corpus.</p></article>
+      <article><b>03 / SEQUENCE</b><h3>HMM + Viterbi</h3><p>Models transitions between tags and finds the most likely sequence.</p></article>
+      <article><b>04 / CORRECTION</b><h3>Brill Tagger</h3><p>Starts from statistical guesses and learns transformations that correct them.</p></article>
+    </div>
+  </section>
+</main>
+<div class="error-toast" id="errorMessage"><div><strong>Engine hiccup</strong><span id="errorMessageText"></span></div><button id="closeError" aria-label="Close">×</button></div>
+<footer><span>POS TAGGER</span><span>Python · Flask · NLTK · Three.js</span></footer>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
